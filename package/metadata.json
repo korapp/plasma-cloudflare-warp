@@ -1,0 +1,32 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "korapps@outlook.com",
+                "Name": "Krzysztof Korab",
+                "UserName": "korapp"
+            }
+        ],
+        "Category": "System Information",
+        "Description": "Cloudflare WARP",
+        "EnabledByDefault": true,
+        "Icon": "zero-trust",
+        "Id": "com.github.korapp.cloudflare-warp",
+        "License": "GPLv3",
+        "Name": "Zero Trust",
+        "ServiceTypes": [
+            "Plasma/Applet"
+        ],
+        "Version": "0.1",
+        "Website": "https://github.com/korapp/plasma-cloudflare-warp",
+        "BugReportUrl": "https://github.com/korapp/plasma-cloudflare-warp/issues/new"
+    },
+    "Keywords": "warp;zero;trust;cloudflare",
+    "X-KDE-ParentApp": "warp-cli",
+    "X-KDE-Version": "5.19",
+    "X-Plasma-API": "declarativeappletscript",
+    "X-Plasma-MainScript": "ui/main.qml",
+    "X-Plasma-NotificationArea": "true",
+    "X-Plasma-NotificationAreaCategory": "ApplicationStatus",
+    "X-Plasma-StandAloneApp": true
+}
