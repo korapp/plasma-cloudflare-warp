@@ -1,13 +1,13 @@
 import QtQuick 2.0
-import QtGraphicalEffects 1.0
+import Qt5Compat.GraphicalEffects 1.0
 
-import org.kde.plasma.core 2.0 as PlasmaCore
+import org.kde.kirigami 2.3 as Kirigami
 
 Item {
     property alias source: icon.source
     property alias active: icon.active
 
-    PlasmaCore.IconItem {
+    Kirigami.Icon {
         id: icon
         anchors.fill: parent
     }
@@ -15,6 +15,6 @@ Item {
     ColorOverlay {
         anchors.fill: icon
         source: icon
-        color: PlasmaCore.Theme.textColor
+        color: Kirigami.Theme.textColor
     }
 }

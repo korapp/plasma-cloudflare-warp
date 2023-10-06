@@ -1,7 +1,8 @@
 import QtQuick 2.0
 
-import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 3.0 as PlasmaComponents3
+
+import org.kde.kirigami 2.3 as Kirigami
 
 Column {
     property alias model: repeater.model
@@ -23,7 +24,7 @@ Column {
 
                 anchors {
                     left: parent.left
-                    leftMargin: repeater.longestString - paintedWidth + Math.round(PlasmaCore.Units.gridUnit / 2)
+                    leftMargin: repeater.longestString - paintedWidth + Math.round(Kirigami.Units.gridUnit / 2)
                 }
 
                 horizontalAlignment: Text.AlignRight
@@ -43,7 +44,7 @@ Column {
                 anchors {
                     left: parent.left
                     right: parent.right
-                    leftMargin: repeater.longestString + Math.round(PlasmaCore.Units.gridUnit / 2)
+                    leftMargin: repeater.longestString + Math.round(Kirigami.Units.gridUnit / 2)
                 }
                 
                 elide: Text.ElideRight

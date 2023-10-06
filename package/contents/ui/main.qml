@@ -4,35 +4,35 @@ import QtQuick.Controls 2.3
 
 import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
+import org.kde.kirigami 2.3 as Kirigami
+import org.kde.notification 1.0
 
-Item {
+PlasmoidItem {
     id: root
-    Plasmoid.compactRepresentation: CompactRepresentation {}
-    Plasmoid.fullRepresentation: FullRepresentation {}
-    Plasmoid.toolTipSubText: {
+    compactRepresentation: CompactRepresentation {}
+    fullRepresentation: FullRepresentation {}
+    toolTipSubText: {
         if (plasmoid.configuration.toggleConnectionOnMiddleButton) {
             const hint = client.isConnected ? i18n("Middle-click to disconnect") : i18n("Middle-click to connect")
             return client.status + "\n" + hint
         }
         return client.status
     }
+    switchWidth: Kirigami.Units.gridUnit * 24
+    switchHeight: Kirigami.Units.gridUnit * 24
     Plasmoid.busy: client.isBusy
     Plasmoid.status: client.isServiceRunning && (client.isConnected || !plasmoid.configuration.hideWhenDisconnected)
         ? PlasmaCore.Types.ActiveStatus
         : PlasmaCore.Types.PassiveStatus
-    
-    Plasmoid.switchWidth: PlasmaCore.Units.gridUnit * 24
-    Plasmoid.switchHeight: PlasmaCore.Units.gridUnit * 24
+    Plasmoid.contextualActions: [
+        mapAction(actionDisconnect, client.isConnected),
+        mapAction(actionConnect, !client.isConnected)
+    ]
 
     Warp {
         id: client
-        watchStats: plasmoid.expanded
-        onIsConnectedChanged: prepareContextualActions()
-        
-        Component.onCompleted: {
-            disableDefaultApp()
-            prepareContextualActions()
-        }
+        watchStats: root.expanded
+        Component.onCompleted: disableDefaultApp()
     }
 
     Action {
@@ -49,33 +49,42 @@ Item {
         onTriggered: client.disconnect()
     }
 
-    function actionToContextual(action) {
-        return [action.text.toLowerCase(), action.text, action.icon.name]
-    }
-
-    Loader {
-        id: nLoader
-        active: plasmoid.configuration.showNotifications
-        source: "Notifications.qml"
+    Component {
+        id: actionComponent
+        PlasmaCore.Action {}
     }
 
     Connections {
         target: client
-        enabled: nLoader.status === Loader.Ready
-        onStatusChanged: nLoader.item.createNotification(client.status)
+        enabled: plasmoid.configuration.showNotifications
+        function onStatusChanged() {
+            createNotification(client.status)
+        }
     }
 
-    function prepareContextualActions() {
-        plasmoid.clearActions()
-        plasmoid.setAction(...actionToContextual(client.isConnected ? actionDisconnect : actionConnect))
+    function mapAction(action, visible) {
+        const ca = actionComponent.createObject(root, {
+            text: action.text,
+            'icon.name': action.icon.name,
+            visible
+        })
+        ca.onTriggered.connect(action.onTriggered)
+        return ca
     }
 
-    function action_disconnect() {
-        client.disconnect()
+    Component {
+        id: notifications
+        Notification {
+            componentName: "plasma_workspace"
+            eventId: "notification"
+            title: plasmoid.title
+            iconName: plasmoid.icon
+            autoDelete: true
+        }
     }
 
-    function action_connect() {
-        client.connect()
+    function createNotification(text) {        
+        notifications.createObject(parent, { text })?.sendEvent()
     }
 
     function nmI18n(...args) {

@@ -1,7 +1,5 @@
 import QtQuick 2.0
 
-import org.kde.plasma.core 2.0 as PlasmaCore
-
 Icon {
     source: plasmoid.icon
     active: mouseArea.containsMouse
@@ -13,7 +11,7 @@ Icon {
         acceptedButtons: Qt.LeftButton | Qt.MiddleButton
         anchors.fill: parent
         
-        onClicked: {
+        onClicked: function (mouse) {
             if (plasmoid.configuration.toggleConnectionOnMiddleButton && mouse.button === Qt.MiddleButton) {
                 toggleConnection()
             } else {
@@ -27,10 +25,6 @@ Icon {
     }
 
     function toggleExpanded() {
-        plasmoid.expanded = !plasmoid.expanded
+        root.expanded = !root.expanded
     }
-
-    Accessible.name: plasmoid.title
-    Accessible.description: plasmoid.toolTipSubText
-    Accessible.role: Accessible.Button
 }
