@@ -30,16 +30,10 @@ Item {
         }
         onIsConnectedChanged: {
             plasmoid.clearActions()
-
-            if (client.isConnected) {
-                plasmoid.setAction(...actionToContextual(actionDisconnect))
-            } else {
-                plasmoid.setAction(...actionToContextual(actionConnect))
-            }
+            plasmoid.setAction(...actionToContextual(client.isConnected ? actionDisconnect : actionConnect))
         }
         
         Component.onCompleted: disableDefaultApp()
-        
     }
 
     Action {
@@ -89,10 +83,4 @@ Item {
     function nmI18n(...args) {
         return i18nd("plasma_applet_org.kde.plasma.networkmanagement", ...args)
     }
-
-    Connections {
-        target: PlasmaCore.Theme
-        onTextColorChanged: console.log(PlasmaCore.Theme.textColor)
-    }
-
 }
