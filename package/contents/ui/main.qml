@@ -11,7 +11,13 @@ Item {
     id: root
     Plasmoid.compactRepresentation: CompactRepresentation {}
     Plasmoid.fullRepresentation: FullRepresentation {}
-    Plasmoid.toolTipSubText: client.status || ''
+    Plasmoid.toolTipSubText: {
+        if (plasmoid.configuration.toggleConnectionOnMiddleButton) {
+            const hint = client.isConnected ? i18n("Middle-click to disconnect") : i18n("Middle-click to connect")
+            return client.status + "\n" + hint
+        }
+        return client.status
+    }
     Plasmoid.busy: client.isBusy
     Plasmoid.status: client.isServiceRunning && (client.isConnected || !plasmoid.configuration.hideWhenDisconnected)
         ? PlasmaCore.Types.ActiveStatus
