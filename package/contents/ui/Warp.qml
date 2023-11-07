@@ -1,7 +1,6 @@
 import QtQuick 2.0
 
 import org.kde.plasma.core 2.0 as PlasmaCore
-import org.kde.plasma.private.quicklaunch 1.0
 
 Item {
     property bool watchStats: false
@@ -18,21 +17,24 @@ Item {
     readonly property bool isBusy: p.isConnecting || p.isOperationInProgress
 
     PlasmaCore.DataSource {
-        id: dataSource
-        readonly property string sourceStatus: "warp-cli status"
-        readonly property string sourceStats: "warp-cli warp-stats"
+        id: watcher
+        readonly property string cmdStatus: "warp-cli status"
+        readonly property string cmdStats: "warp-cli warp-stats"
         readonly property var handlers: ({
-            [sourceStatus]: p.updateStatus,
-            [sourceStats]: p.updateStats
+            [cmdStatus]: p.updateStatus,
+            [cmdStats]: p.updateStats
         })
         engine: "executable"
-        connectedSources: [sourceStatus]
+        connectedSources: [cmdStatus]
         interval: p.isServiceRunning ? 1000 : 5000
         onNewData: handlers[sourceName](data)
     }
 
-    Logic {
-        id: kRun
+    PlasmaCore.DataSource {
+        id: exec
+        engine: "executable"
+        onNewData: disconnectSource(sourceName)
+        readonly property var run: connectSource
     }
 
     QtObject {
@@ -49,16 +51,16 @@ Item {
 
         function connect() {
             isOperationInProgress = true
-            return kRun.openExec("warp-cli connect")
+            exec.run("warp-cli connect")
         }
 
         function disconnect() {
             isOperationInProgress = true
-            return kRun.openExec("warp-cli disconnect")
+            exec.run("warp-cli disconnect")
         }
 
         function disableDefaultApp() {
-            return kRun.openExec("systemctl --user stop warp-taskbar")
+            exec.run("systemctl --user stop warp-taskbar")
         }
 
         function parseStdoutProperties(text) {
@@ -98,9 +100,9 @@ Item {
 
         onWatchStatsFlagChanged: {
             if (watchStatsFlag) {
-                dataSource.connectSource(dataSource.sourceStats)
+                watcher.connectSource(watcher.cmdStats)
             } else {
-                dataSource.disconnectSource(dataSource.sourceStats)
+                watcher.disconnectSource(watcher.cmdStats)
                 stats = null
             }
         }
