@@ -34,12 +34,12 @@ Item {
                 createNotification(status)
             }
         }
-        onIsConnectedChanged: {
-            plasmoid.clearActions()
-            plasmoid.setAction(...actionToContextual(client.isConnected ? actionDisconnect : actionConnect))
-        }
+        onIsConnectedChanged: prepareContextualActions()
         
-        Component.onCompleted: disableDefaultApp()
+        Component.onCompleted: {
+            disableDefaultApp()
+            prepareContextualActions()
+        }
     }
 
     Action {
@@ -76,6 +76,11 @@ Item {
         operation.expireTimeout = 5000
 
         service.startOperationCall(operation);
+    }
+
+    function prepareContextualActions() {
+        plasmoid.clearActions()
+        plasmoid.setAction(...actionToContextual(client.isConnected ? actionDisconnect : actionConnect))
     }
 
     function action_disconnect() {
