@@ -78,7 +78,7 @@ Item {
         function updateStatus(data) {
             const isRunning = !data["exit code"]
             if (!isRunning) {
-                errorMessage = parseStdoutProperties(data.stderr)[0][1]
+                errorMessage = data.stderr
                 status = ""
             } else {
                 const statusMessage = parseStdoutProperties(data.stdout)[0][1]
