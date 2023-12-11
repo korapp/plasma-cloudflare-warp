@@ -1,11 +1,11 @@
-import QtQuick 2.7
-import QtQuick.Layouts 1.1
-import QtQuick.Controls 2.3
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
 
-import org.kde.plasma.plasmoid 2.0
-import org.kde.plasma.core 2.0 as PlasmaCore
-import org.kde.kirigami 2.3 as Kirigami
-import org.kde.notification 1.0
+import org.kde.plasma.plasmoid
+import org.kde.plasma.core as PlasmaCore
+import org.kde.kirigami as Kirigami
+import org.kde.notification
 
 PlasmoidItem {
     id: root
