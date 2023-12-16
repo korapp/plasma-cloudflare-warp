@@ -1,6 +1,6 @@
-import QtQuick 2.0
+import QtQuick
 
-import org.kde.plasma.core 2.0 as PlasmaCore
+import org.kde.plasma.plasma5support as P5Support
 
 Item {
     property bool watchStats: false
@@ -16,7 +16,7 @@ Item {
     readonly property var disableDefaultApp: p.disableDefaultApp
     readonly property bool isBusy: p.isConnecting || p.isOperationInProgress
 
-    PlasmaCore.DataSource {
+    P5Support.DataSource {
         id: watcher
         readonly property string cmdStatus: "warp-cli status"
         readonly property string cmdStats: "warp-cli warp-stats"
@@ -27,13 +27,13 @@ Item {
         engine: "executable"
         connectedSources: [cmdStatus]
         interval: p.isServiceRunning ? 1000 : 5000
-        onNewData: handlers[sourceName](data)
+        onNewData: (sourceName, data) => handlers[sourceName](data)
     }
 
-    PlasmaCore.DataSource {
+    P5Support.DataSource {
         id: exec
         engine: "executable"
-        onNewData: disconnectSource(sourceName)
+        onNewData: disconnectSource
         readonly property var run: connectSource
     }
 
@@ -84,7 +84,7 @@ Item {
                 const statusMessage = parseStdoutProperties(data.stdout)[0][1]
                 const newStatus = statusMessage.replace(". Reason: ", "\n")
                 errorMessage = ""
-                if (status != newStatus) {                
+                if (status != newStatus) {
                     status = newStatus
                     isOperationInProgress = false
                 }

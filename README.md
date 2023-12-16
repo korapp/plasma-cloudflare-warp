@@ -18,7 +18,7 @@ Plasmoid for the official [Cloudflare WARP client][warp].
 ## Requirements
 
 * [Cloudflare WARP][warp]
-* Qt >= 5.14, KDE Frameworks >= 5.73, KDE Plasma >= 5.19 (Kubuntu 20.10 and newer)
+* KDE Plasma >= 6.0
 
 ## Installation
 
@@ -63,6 +63,6 @@ Say thank you with coffee ☕ if you'd like.
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/korapp)
 [<img src="https://img.shields.io/badge/Revolut-white?logo=Revolut&logoColor=black" height="30"/>](https://revolut.me/korapp)
 
-[kdestore]: https://store.kde.org/p/2081104/
+[kdestore]: https://store.kde.org/p/2113872/
 [releases]: https://github.com/korapp/plasma-cloudflare-warp/releases
 [warp]: https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/download-warp/#linux
