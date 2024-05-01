@@ -3,9 +3,12 @@ import QtQuick 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 
 Icon {
+    readonly property color connectedColor: PlasmaCore.Theme[plasmoid.configuration.iconColorConnected]
+    readonly property color disconnectedColor: PlasmaCore.Theme[plasmoid.configuration.iconColorDisconnected]
+    opacity: !client.isConnected && connectedColor === disconnectedColor ? 0.5 : 1
     source: plasmoid.icon
     active: mouseArea.containsMouse
-    opacity: client.isConnected ? 1 : 0.5
+    color: client.isConnected ? connectedColor : disconnectedColor
 
     MouseArea {
         id: mouseArea
