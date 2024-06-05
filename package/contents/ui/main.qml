@@ -68,7 +68,7 @@ PlasmoidItem {
             'icon.name': action.icon.name,
             visible
         })
-        ca.onTriggered.connect(action.onTriggered)
+        ca.onTriggered.connect(action.triggered)
         return ca
     }
 
