@@ -6,15 +6,17 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 Item {
     property alias source: icon.source
     property alias active: icon.active
+    property color color: PlasmaCore.Theme.textColor
 
     PlasmaCore.IconItem {
         id: icon
         anchors.fill: parent
+        visible: false
     }
     
     ColorOverlay {
         anchors.fill: icon
         source: icon
-        color: PlasmaCore.Theme.textColor
+        color: parent.color
     }
 }
