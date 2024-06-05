@@ -1,9 +1,15 @@
 import QtQuick
 
-Icon {
+import org.kde.kirigami as Kirigami
+
+Kirigami.Icon {
+    readonly property color connectedColor: Kirigami.Theme[plasmoid.configuration.iconColorConnected]
+    readonly property color disconnectedColor: Kirigami.Theme[plasmoid.configuration.iconColorDisconnected]
     source: plasmoid.icon
     active: mouseArea.containsMouse
-    opacity: client.isConnected ? 1 : 0.5
+    color: client.isConnected ? connectedColor : disconnectedColor
+    opacity: !client.isConnected && connectedColor === disconnectedColor ? 0.5 : 1
+    isMask: true
 
     MouseArea {
         id: mouseArea

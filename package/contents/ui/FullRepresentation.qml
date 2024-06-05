@@ -20,9 +20,10 @@ PlasmaComponents3.Page {
         enabled: !client.isBusy
         anchors.centerIn: parent
   
-        Icon {
+        Kirigami.Icon {
             opacity: 0.5
             source: icon
+            isMask: true
             readonly property int size: Math.round(Kirigami.Units.iconSizes.huge * 1.5)
             Layout.alignment: Qt.AlignHCenter
             Layout.preferredWidth: size
