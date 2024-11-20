@@ -19,7 +19,7 @@ Item {
     PlasmaCore.DataSource {
         id: watcher
         readonly property string cmdStatus: "warp-cli status"
-        readonly property string cmdStats: "warp-cli warp-stats"
+        readonly property string cmdStats: "warp-cli tunnel stats"
         readonly property var handlers: ({
             [cmdStatus]: p.updateStatus,
             [cmdStats]: p.updateStats
