@@ -33,7 +33,9 @@ Item {
     P5Support.DataSource {
         id: exec
         engine: "executable"
-        onNewData: disconnectSource
+        onNewData: (sourceName, data) => {
+            exec.disconnectSource(sourceName)
+        }
         readonly property var run: connectSource
     }
 
