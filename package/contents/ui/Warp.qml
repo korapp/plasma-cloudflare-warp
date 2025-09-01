@@ -33,7 +33,7 @@ Item {
     P5Support.DataSource {
         id: exec
         engine: "executable"
-        onNewData: disconnectSource
+        onNewData: sourceName => disconnectSource(sourceName)
         readonly property var run: connectSource
     }
 
@@ -81,8 +81,7 @@ Item {
                 errorMessage = data.stderr
                 status = ""
             } else {
-                const statusMessage = parseStdoutProperties(data.stdout)[0][1]
-                const newStatus = statusMessage.replace(". Reason: ", "\n")
+                const newStatus = parseStdoutProperties(data.stdout).map(l => l[1]).join("\n")
                 errorMessage = ""
                 if (status != newStatus) {
                     status = newStatus
