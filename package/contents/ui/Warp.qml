@@ -81,7 +81,10 @@ Item {
                 errorMessage = data.stderr
                 status = ""
             } else {
-                const newStatus = parseStdoutProperties(data.stdout).map(l => l[1]).join("\n")
+                const newStatus = parseStdoutProperties(data.stdout)
+                    .filter(p => ['Status update', 'Reason'].includes(p[0]))
+                    .map(p => p[1]).join("\n")
+                
                 errorMessage = ""
                 if (status != newStatus) {                
                     status = newStatus
