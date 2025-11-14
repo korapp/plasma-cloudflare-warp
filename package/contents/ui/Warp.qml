@@ -66,13 +66,13 @@ Item {
         function parseStdoutProperties(text) {
             if (!text) return []
             const lines = text.split(propertiesSplitRegex)
-            return lines.reduce((acc, l) => {
+            let props = []
+            for (const l of lines) {
                 const idx = l ? l.indexOf(": ") : -1
-                if (~idx) {
-                    acc.push([l.substring(0, idx), l.substring(idx+2)])
-                }
-                return acc
-            }, [])
+                if (!~idx) break
+                props.push([l.substring(0, idx), l.substring(idx+2)])
+            }
+            return props
         }
         
         function updateStatus(data) {
