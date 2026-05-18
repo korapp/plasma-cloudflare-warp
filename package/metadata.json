@@ -10,7 +10,7 @@
         "Category": "System Information",
         "Description": "Cloudflare WARP",
         "EnabledByDefault": true,
-        "Icon": "zero-trust-connected",
+        "Icon": "zero-trust-orange",
         "Id": "com.github.korapp.cloudflare-warp",
         "License": "GPLv3",
         "Name": "Zero Trust",
